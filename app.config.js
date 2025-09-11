@@ -24,6 +24,9 @@ export default {
           NSMicrophoneUsageDescription: "This app uses the microphone to record voice notes for trip documentation.",
           NSPhotoLibraryUsageDescription: "This app accesses your photo library to save vehicle documentation photos.",
           NSMotionUsageDescription: "This app uses motion data to enhance location accuracy during vehicle tracking."
+        },
+        config: {
+          googleMapsApiKey: process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY || "AIzaSyAhoyKz_MWD2hoesNvhP1ofEP4SZl3dxtg"
         }
       },
       android: {
@@ -42,7 +45,12 @@ export default {
           "WRITE_EXTERNAL_STORAGE"
         ],
         // Firebase configuration for Android
-        googleServicesFile: "./google-services.json"
+        googleServicesFile: "./google-services.json",
+        config: {
+          googleMaps: {
+            apiKey: process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY || "AIzaSyAhoyKz_MWD2hoesNvhP1ofEP4SZl3dxtg"
+          }
+        }
       },
       web: {
         favicon: "./assets/favicon.png",

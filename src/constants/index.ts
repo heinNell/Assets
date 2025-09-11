@@ -17,6 +17,9 @@ export const FIREBASE_COLLECTIONS = {
   GEOFENCES: "geofences",
   QR_CODES: "qrCodes",
   ANALYTICS: "analytics",
+  CHECK_INS: "vehicleCheckIns", // Alias for compatibility
+  MAINTENANCE: "maintenanceRecords", // Alias for compatibility
+  LOCATION_UPDATES: "vehicleLocations", // Alias for compatibility
 };
 
 export const USER_ROLES = {
@@ -127,6 +130,11 @@ export const COLORS = {
   surface: "#FFFFFF",
   text: "#212121",
   textSecondary: "#757575",
+  white: "#FFFFFF",
+  black: "#000000",
+  gray: "#9E9E9E",
+  lightGray: "#E0E0E0",
+  warningLight: "#FFF3E0", // Light warning background
 };
 
 export const SPACING = {

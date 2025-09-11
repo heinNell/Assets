@@ -56,6 +56,13 @@ export interface Vehicle {
   currentDriverId?: string;
   createdAt: Date;
   updatedAt: Date;
+  // Additional properties referenced in the code
+  licensePlate?: string;
+  make?: string;
+  color?: string;
+  fuelType?: string;
+  seatingCapacity?: number;
+  currentOdometer?: number;
 }
 
 export interface VehicleCheckIn {
@@ -185,18 +192,64 @@ export interface VehicleMetrics {
   };
 }
 
+export interface LocationData {
+  latitude: number;
+  longitude: number;
+  altitude?: number | null;
+  accuracy?: number | null;
+  heading?: number | null;
+  speed?: number | null;
+  timestamp: Date;
+}
+
+export interface TripData {
+  id: string;
+  driverId: string;
+  vehicleId: string;
+  startTime: Date | any; // Firebase Timestamp
+  endTime?: Date | any; // Firebase Timestamp
+  startLocation: LocationData;
+  endLocation?: LocationData;
+  locations: LocationData[];
+  status: "active" | "completed" | "cancelled";
+  totalDistance: number;
+  averageSpeed: number;
+  duration: number;
+  fuelConsumption?: number;
+  lastUpdated?: Date | any;
+}
+
+export interface BarcodeScanResult {
+  success: boolean;
+  vehicle?: Vehicle;
+  barcodeData?: string;
+  error?: string;
+  timestamp: Date;
+}
+
+// Additional types for QR and analytics
+export interface VehicleBarcode {
+  id: string;
+  vehicleId: string;
+  barcodeData: string;
+  createdAt: Date | any; // Firebase Timestamp
+  createdBy: string;
+  isActive: boolean;
+  expiresAt?: Date | any;
+}
+
 export interface FleetAnalytics {
-  fleetUtilization: number;
+  totalVehicles: number;
+  activeVehicles: number;
+  totalDrivers: number;
+  activeDrivers: number;
+  totalTrips: number;
+  completedTrips: number;
   averageTripDuration: number;
-  fuelEfficiency: number;
-  maintenanceCosts: number;
-  vehicleDowntime: number;
-  driverPerformance: Array<{
-    driverId: string;
-    safetyScore: number;
-    efficiencyScore: number;
-    complianceScore: number;
-  }>;
+  totalDistance: number;
+  averageFuelConsumption: number;
+  maintenanceAlerts: number;
+  overdueMaintenance: number;
 }
 
 // Navigation types

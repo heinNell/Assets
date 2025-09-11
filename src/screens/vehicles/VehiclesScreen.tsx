@@ -1,41 +1,75 @@
-// src/screens/vehicles/VehiclesScreen.tsx
-import React from "react";
-import { View, Text, StyleSheet, SafeAreaView } from "react-native";
-import { COLORS, SPACING, FONT_SIZES } from "../../constants";
+//VehiclesScreen.tsx
 
-const VehiclesScreen: React.FC = () => {
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  SafeAreaView,
+  ActivityIndicator,
+  RefreshControl,
+  TextInput,
+} from "react-native";
+import { StatusBar } from "expo-status-bar";
+import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+
+interface VehicleItem {
+  id: string;
+  make: string;
+  model: string;
+  year: number;
+  licensePlate: string;
+  status: "available" | "in_use" | "maintenance" | "out_of_service";
+  currentOdometer: number;
+  fuelLevel?: number;
+}
+
+export const VehiclesScreen: React.FC = () => {
+  const navigation = useNavigation();
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [vehicles, setVehicles] = useState<VehicleItem[]>([]);
+  const [filteredVehicles, setFilteredVehicles] = useState<VehicleItem[]>([]);
+
+  useEffect(() => {
+    loadVehicles();
+  }, []);
+
+  useEffect(() => {
+    filterVehicles();
+  }, [searchQuery, vehicles]);
+
+  const loadVehicles = async () => {
+    setLoading(true);
+    try {
+      // Load vehicles from Firebase
+      // For now, using placeholder data
+      const mockVehicles: VehicleItem[] = [
+        {
+          id: "AFG7557",
+          make: "HONDA",
+          model: "FIT RS",
+          year: 2020,
+          licensePlate: "AFG7557",
+        },
+      ];
+      setVehicles(mockVehicles);
+    } catch (error) {
+      console.error("Error loading vehicles:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.title}>Vehicles</Text>
-        <Text style={styles.subtitle}>Fleet management coming soon...</Text>
-      </View>
-    </SafeAreaView>
+    <View style={styles.container}>
+      <Text>Vehicles Screen</Text>
+    </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.background,
-  },
-  content: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: SPACING.lg,
-  },
-  title: {
-    fontSize: FONT_SIZES.xxl,
-    fontWeight: "bold",
-    color: COLORS.primary,
-    marginBottom: SPACING.sm,
-  },
-  subtitle: {
-    fontSize: FONT_SIZES.md,
-    color: COLORS.textSecondary,
-    textAlign: "center",
-  },
-});
 
 export default VehiclesScreen;

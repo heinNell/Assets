@@ -12,6 +12,9 @@ import VehicleDetailScreen from "../screens/vehicles/VehicleDetailScreen";
 import CheckInScreen from "../screens/checkin/CheckInScreen";
 import MaintenanceScreen from "../screens/maintenance/MaintenanceScreen";
 import ProfileScreen from "../screens/profile/ProfileScreen";
+import TripTrackingScreen from "../screens/TripTrackingScreen";
+import TripDetailsScreen from "../screens/TripDetailsScreen";
+import TripHistoryScreen from "../screens/TripHistoryScreen";
 
 export type MainStackParamList = {
   Dashboard: undefined;
@@ -20,6 +23,9 @@ export type MainStackParamList = {
   CheckIn: { vehicleId?: string; qrData?: string };
   Maintenance: undefined;
   Profile: undefined;
+  TripTracking: undefined;
+  TripDetails: { tripId: string };
+  TripHistory: undefined;
 };
 
 export type TabParamList = {
@@ -38,6 +44,9 @@ const DashboardStack: React.FC = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Dashboard" component={DashboardScreen} />
+      <Stack.Screen name="TripTracking" component={TripTrackingScreen} />
+      <Stack.Screen name="TripDetails" component={TripDetailsScreen} />
+      <Stack.Screen name="TripHistory" component={TripHistoryScreen} />
     </Stack.Navigator>
   );
 };

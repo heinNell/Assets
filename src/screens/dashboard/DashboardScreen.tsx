@@ -47,6 +47,7 @@ const DashboardScreen: React.FC = () => {
       setRecentVehicles(vehiclesData.slice(0, 5)); // Show last 5 vehicles
     } catch (error) {
       console.error("Error loading dashboard data:", error);
+      throw error;
     } finally {
       setLoading(false);
     }
@@ -74,6 +75,14 @@ const DashboardScreen: React.FC = () => {
     navigation.navigate("Maintenance");
   };
 
+  const navigateToMapTest = () => {
+    navigation.navigate("MapTest");
+  };
+
+  const navigateToTripTracking = () => {
+    navigation.navigate("TripTracking");
+  };
+
   const navigateToVehicleDetail = (vehicleId: string) => {
     navigation.navigate("VehicleDetail", { vehicleId });
   };
@@ -98,9 +107,9 @@ const DashboardScreen: React.FC = () => {
     >
       <View style={styles.vehicleHeader}>
         <Text style={styles.vehicleName}>
-          {vehicle.make} {vehicle.model}
+          {vehicle.manufacturer} {vehicle.model}
         </Text>
-        <Text style={styles.vehiclePlate}>{vehicle.licensePlate}</Text>
+        <Text style={styles.vehiclePlate}>{vehicle.registrationNo}</Text>
       </View>
       <View style={styles.vehicleDetails}>
         <Text style={styles.vehicleMileage}>
@@ -171,17 +180,24 @@ const DashboardScreen: React.FC = () => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.actionButton}
-            onPress={navigateToVehicles}
+            onPress={navigateToTripTracking}
           >
-            <Text style={styles.actionIcon}>📋</Text>
-            <Text style={styles.actionText}>View Fleet</Text>
+            <Text style={styles.actionIcon}>�️</Text>
+            <Text style={styles.actionText}>Track Trip</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.actionButton}
-            onPress={navigateToMaintenance}
+            onPress={navigateToTripHistory}
           >
-            <Text style={styles.actionIcon}>🔧</Text>
-            <Text style={styles.actionText}>Maintenance</Text>
+            <Text style={styles.actionIcon}>�</Text>
+            <Text style={styles.actionText}>Trip History</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={navigateToVehicles}
+          >
+            <Text style={styles.actionIcon}>�</Text>
+            <Text style={styles.actionText}>View Fleet</Text>
           </TouchableOpacity>
         </View>
 
@@ -191,25 +207,25 @@ const DashboardScreen: React.FC = () => {
             <Text style={styles.sectionTitle}>Fleet Overview</Text>
             <View style={styles.statsGrid}>
               <StatCard
-                title="Total Vehicles"
-                value={analytics.totalVehicles}
+                title="Fleet Utilization"
+                value={`${Math.round(analytics.fleetUtilization * 100)}%`}
                 color={COLORS.primary}
               />
               <StatCard
-                title="Active Vehicles"
-                value={analytics.activeVehicles}
-                subtitle="Currently in use"
+                title="Avg Trip Duration"
+                value={`${Math.round(analytics.averageTripDuration)}min`}
+                subtitle="Average trip time"
                 color={COLORS.success}
               />
               <StatCard
-                title="Maintenance Due"
-                value={analytics.maintenanceDue}
-                subtitle="Need service"
+                title="Fuel Efficiency"
+                value={`${analytics.fuelEfficiency.toFixed(1)}L/100km`}
+                subtitle="Average consumption"
                 color={COLORS.warning}
               />
               <StatCard
-                title="Total Drivers"
-                value={analytics.totalDrivers}
+                title="Maintenance Cost"
+                value={`R${analytics.maintenanceCosts.toLocaleString()}`}
                 color={COLORS.info}
               />
             </View>
