@@ -180,8 +180,16 @@ export interface MaintenanceAlert {
 
 export interface VehicleMetrics {
   vehicleId: string;
-  period: "daily" | "weekly" | "monthly";
-  metrics: {
+  period?: "daily" | "weekly" | "monthly";
+  totalMileage?: number;
+  fuelEfficiency?: number;
+  maintenanceCost?: number;
+  downtimeHours?: number;
+  utilizationHours?: number;
+  lastServiceDate?: Date | any;
+  nextServiceDate?: Date | any;
+  lastUpdated?: Date | any;
+  metrics?: {
     totalDistance: number;
     fuelConsumption: number;
     idleTime: number;
@@ -242,14 +250,19 @@ export interface FleetAnalytics {
   totalVehicles: number;
   activeVehicles: number;
   totalDrivers: number;
-  activeDrivers: number;
-  totalTrips: number;
-  completedTrips: number;
-  averageTripDuration: number;
-  totalDistance: number;
-  averageFuelConsumption: number;
-  maintenanceAlerts: number;
-  overdueMaintenance: number;
+  activeDrivers?: number;
+  totalTrips?: number;
+  completedTrips?: number;
+  averageTripDuration?: number;
+  totalDistance?: number;
+  averageFuelConsumption?: number;
+  maintenanceAlerts?: number;
+  maintenanceDue?: number;
+  overdueMaintenance?: number;
+  utilizationRate?: number;
+  averageMileage?: number;
+  fuelEfficiency?: number;
+  lastUpdated?: Date | any;
 }
 
 export interface InspectionRecord {
