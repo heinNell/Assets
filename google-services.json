@@ -1,0 +1,30 @@
+{
+    "project_info": {
+      "project_number": "937563757873",
+      "firebase_url": "https://matanuska-9cf44-default-rtdb.firebaseio.com",
+      "project_id": "matanuska-9cf44",
+      "storage_bucket": "matanuska-9cf44.firebasestorage.app"
+    },
+    "client": [
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:937563757873:android:1bc6098a39101157f7e410",
+          "android_client_info": {
+            "package_name": "Android.a123"
+          }
+        },
+        "oauth_client": [],
+        "api_key": [
+          {
+            "current_key": "AIzaSyBZ7F6hiGERA-f0Q_LL3KQ91HuXU2G8yqo"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": []
+          }
+        }
+      }
+    ],
+    "configuration_version": "1"
+  }

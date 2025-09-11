@@ -301,5 +301,7 @@ Before going live, verify:
 - [EAS Build Guide](https://docs.expo.dev/build/introduction/)
 
 ---
-
 **🎉 Your Firebase project is now ready for the Fleet Tracker mobile app!** All vehicle data, QR codes, and fleet management features are configured and ready to deploy.
+=======
+**🎉 Your Firebase project is now ready for the Fleet Tracker mobile app!** All vehicle data, QR codes, and fleet management features are configured and ready to deploy.
+>>>>>>> 3c1f7c4 (chore: update Expo config, .env, and Android settings for Firebase/Maps integration)

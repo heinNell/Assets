@@ -1,0 +1,25 @@
+{
+    "expo": {
+      "plugins": [
+        [
+          "expo-sensors",
+          {
+            "motionPermission": "Allow $(PRODUCT_NAME) to access your device motion."
+          }
+        ]
+      ]
+    }
+  }
+
+  {
+    "expo": {
+      "plugins": [
+        [
+          "expo-location",
+          {
+            "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+          }
+        ]
+      ]
+    }
+  }
