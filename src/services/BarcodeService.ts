@@ -71,8 +71,8 @@ export class BarcodeService {
     if (parts.length !== 5) return null;
 
     return {
-      registrationNo: parts[1],
-      fleetNo: parts[2] === "N/A" ? "" : parts[2],
+      registrationNo: parts[1] || "",
+      fleetNo: parts[2] === "N/A" ? "" : parts[2] || "",
     };
   }
 
@@ -391,25 +391,67 @@ export class BarcodeService {
   }
 
   /**
-   * Seed fleet vehicles with QR codes (one-time setup)
+   * Validate QR code format (public method)
    */
-  static async seedFleetVehicles(
-    companyId: string,
-    createdBy: string
-  ): Promise<void> {
+  static isValidBarcodeFormat(barcodeData: string): boolean {
+    return this.validateBarcodeFormat(barcodeData);
+  }
+
+  /**
+   * Find vehicle by barcode data
+   */
+  static async findVehicleByBarcode(
+    barcodeData: string
+  ): Promise<{ vehicle: Vehicle; barcode: VehicleBarcode } | null> {
     try {
-      console.log("Seeding fleet vehicles with QR codes...");
-
-      const generatedCount = await this.generateMissingBarcodes(
-        companyId,
-        createdBy
-      );
-
-      console.log(`Generated ${generatedCount} QR codes for fleet vehicles`);
+      const scanResult = await this.scanVehicleQR(barcodeData, "system");
+      if (scanResult.success && scanResult.vehicle && scanResult.barcode) {
+        return { vehicle: scanResult.vehicle, barcode: scanResult.barcode };
+      }
+      return null;
     } catch (error) {
-      console.error("Error seeding fleet vehicles:", error);
-      throw error;
+      console.error("Error finding vehicle by barcode:", error);
+      return null;
     }
+  }
+
+  /**
+   * Get barcode by vehicle ID (alias for getVehicleBarcode)
+   */
+  static async getBarcodeByVehicleId(
+    vehicleId: string
+  ): Promise<VehicleBarcode | null> {
+    return this.getVehicleBarcode(vehicleId);
+  }
+
+  /**
+   * Generate printable label data for QR code
+   */
+  static generatePrintableLabelData(
+    vehicle: Vehicle,
+    barcode: VehicleBarcode
+  ): {
+    qrCode: string;
+    vehicleInfo: string[];
+    instructions: string[];
+    barcodeData: string;
+  } {
+    return {
+      qrCode: barcode.qrCodeUrl,
+      vehicleInfo: [
+        `Registration: ${vehicle.registrationNo}`,
+        `Fleet No: ${vehicle.fleetNo || "N/A"}`,
+        `Make/Model: ${vehicle.manufacturer} ${vehicle.model}`,
+        `Year: ${vehicle.year}`,
+      ],
+      instructions: [
+        "Scan this QR code to check-in to the vehicle",
+        "Ensure the code is clearly visible",
+        "Replace if damaged or unreadable",
+        "Contact fleet manager for replacements",
+      ],
+      barcodeData: barcode.barcodeData,
+    };
   }
 }
 

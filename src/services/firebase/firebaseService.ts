@@ -124,7 +124,9 @@ export const vehicleService = {
       const snapshot = await getDocs(q);
       if (!snapshot.empty) {
         const doc = snapshot.docs[0];
-        return { id: doc.id, ...doc.data() } as Vehicle;
+        if (doc) {
+          return { id: doc.id, ...doc.data() } as Vehicle;
+        }
       }
       return null;
     } catch (error) {
@@ -201,7 +203,9 @@ export const checkInService = {
       const snapshot = await getDocs(q);
       if (!snapshot.empty) {
         const doc = snapshot.docs[0];
-        return { id: doc.id, ...doc.data() } as VehicleCheckIn;
+        if (doc) {
+          return { id: doc.id, ...doc.data() } as VehicleCheckIn;
+        }
       }
       return null;
     } catch (error) {
@@ -387,7 +391,9 @@ export const analyticsService = {
         activeVehicles: vehicles.filter((v) => v.status === "in-use").length,
         totalDrivers: users.filter((u) => u.role === "driver").length,
         maintenanceDue: vehicles.filter(
-          (v) => v.nextServiceDate && v.nextServiceDate.toDate() < new Date()
+          (v) =>
+            v.nextServiceDue?.date &&
+            v.nextServiceDue.date.toDate() < new Date()
         ).length,
         utilizationRate: 0, // Would need to calculate from check-in data
         averageMileage: 0, // Would need to calculate from vehicle data
@@ -421,8 +427,8 @@ export const analyticsService = {
         ),
         downtimeHours: 0, // Calculate from maintenance records
         utilizationHours: 0, // Calculate from check-in data
-        lastServiceDate: vehicle.lastServiceDate,
-        nextServiceDate: vehicle.nextServiceDate,
+        lastServiceDate: vehicle.lastService?.date,
+        nextServiceDate: vehicle.nextServiceDue?.date,
         lastUpdated: Timestamp.now(),
       };
     } catch (error) {
@@ -464,7 +470,7 @@ export const realtimeService = {
     );
 
     return onSnapshot(q, (snapshot) => {
-      if (!snapshot.empty) {
+      if (!snapshot.empty && snapshot.docs[0]) {
         const checkIn = {
           id: snapshot.docs[0].id,
           ...snapshot.docs[0].data(),

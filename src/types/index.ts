@@ -195,10 +195,10 @@ export interface VehicleMetrics {
 export interface LocationData {
   latitude: number;
   longitude: number;
-  altitude?: number | null;
-  accuracy?: number | null;
-  heading?: number | null;
-  speed?: number | null;
+  altitude?: number;
+  accuracy?: number;
+  heading?: number;
+  speed?: number;
   timestamp: Date;
 }
 
@@ -252,6 +252,26 @@ export interface FleetAnalytics {
   overdueMaintenance: number;
 }
 
+export interface InspectionRecord {
+  id: string;
+  vehicleId: string;
+  type: "check_in" | "check_out";
+  timestamp: Date;
+  status: "pending" | "completed" | "failed";
+  overallCondition: "excellent" | "good" | "fair" | "poor";
+  notes?: string;
+}
+
+export interface VehicleItem {
+  id: string;
+  make: string;
+  model: string;
+  year: number;
+  licensePlate: string;
+  status: "available" | "in-use" | "maintenance";
+  currentOdometer: number;
+}
+
 // Navigation types
 export type RootStackParamList = {
   Auth: undefined;
@@ -273,4 +293,18 @@ export type MainTabParamList = {
   Vehicles: undefined;
   Maintenance: undefined;
   Analytics: undefined;
+};
+
+export type MainStackParamList = {
+  Dashboard: undefined;
+  Vehicles: undefined;
+  VehicleDetail: { vehicleId: string };
+  CheckIn: { vehicleId?: string; qrData?: string };
+  Maintenance: undefined;
+  Profile: undefined;
+  TripTracking: undefined;
+  TripHistory: undefined;
+  TripDetails: { tripId: string };
+  MapTest: undefined;
+  BarcodeScanner: undefined;
 };

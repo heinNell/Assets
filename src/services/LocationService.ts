@@ -37,10 +37,10 @@ export class LocationService {
       return {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
-        accuracy: location.coords.accuracy,
+        accuracy: location.coords.accuracy || undefined,
         timestamp: new Date(location.timestamp),
-        speed: location.coords.speed,
-        heading: location.coords.heading,
+        speed: location.coords.speed || undefined,
+        heading: location.coords.heading || undefined,
       };
     } catch (error) {
       console.error("Error getting current location:", error);
@@ -76,10 +76,10 @@ export class LocationService {
           const locationData: LocationData = {
             latitude: location.coords.latitude,
             longitude: location.coords.longitude,
-            accuracy: location.coords.accuracy,
+            accuracy: location.coords.accuracy || undefined,
             timestamp: new Date(location.timestamp),
-            speed: location.coords.speed,
-            heading: location.coords.heading,
+            speed: location.coords.speed || undefined,
+            heading: location.coords.heading || undefined,
           };
           callback(locationData);
         }
@@ -129,14 +129,18 @@ export class LocationService {
    * Check if location is within geofence
    */
   static isWithinGeofence(location: LocationData, geofence: Geofence): boolean {
+    if (!geofence.coordinates.center || !geofence.coordinates.radius) {
+      return false;
+    }
+
     const distance = this.calculateDistance(
       location.latitude,
       location.longitude,
-      geofence.latitude,
-      geofence.longitude
+      geofence.coordinates.center.latitude,
+      geofence.coordinates.center.longitude
     );
 
-    return distance <= geofence.radius;
+    return distance <= geofence.coordinates.radius;
   }
 
   /**
@@ -154,9 +158,9 @@ export class LocationService {
 
       if (address.length > 0) {
         const addr = address[0];
-        return `${addr.street || ""} ${addr.city || ""}, ${addr.region || ""} ${
-          addr.postalCode || ""
-        }`.trim();
+        return `${addr?.street || ""} ${addr?.city || ""}, ${
+          addr?.region || ""
+        } ${addr?.postalCode || ""}`.trim();
       }
 
       return null;
@@ -177,8 +181,8 @@ export class LocationService {
 
       if (locations.length > 0) {
         return {
-          latitude: locations[0].latitude,
-          longitude: locations[0].longitude,
+          latitude: locations[0]?.latitude || 0,
+          longitude: locations[0]?.longitude || 0,
         };
       }
 

@@ -12,14 +12,15 @@ export const FIREBASE_COLLECTIONS = {
   USERS: "users",
   VEHICLES: "vehicles",
   VEHICLE_CHECKINS: "vehicleCheckIns",
+  CHECK_INS: "vehicleCheckIns", // Alias for compatibility
   MAINTENANCE_RECORDS: "maintenanceRecords",
+  MAINTENANCE: "maintenanceRecords", // Alias for compatibility
   VEHICLE_LOCATIONS: "vehicleLocations",
+  LOCATION_UPDATES: "vehicleLocations", // Alias for compatibility
   GEOFENCES: "geofences",
   QR_CODES: "qrCodes",
   ANALYTICS: "analytics",
-  CHECK_INS: "vehicleCheckIns", // Alias for compatibility
-  MAINTENANCE: "maintenanceRecords", // Alias for compatibility
-  LOCATION_UPDATES: "vehicleLocations", // Alias for compatibility
+  TRIPS: "trips",
 };
 
 export const USER_ROLES = {
