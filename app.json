@@ -1,25 +1,21 @@
 {
-    "expo": {
-      "plugins": [
-        [
-          "expo-sensors",
-          {
-            "motionPermission": "Allow $(PRODUCT_NAME) to access your device motion."
-          }
-        ]
+  "expo": {
+    "name": "Matanuska",
+    "slug": "matanuska",
+    "plugins": [
+      ["expo-sensors", { "motionPermission": "Allow $(PRODUCT_NAME) to access your device motion." }],
+      ["expo-location", { "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location." }],
+      ["react-native-maps", { "androidGoogleMapsApiKey": "YOUR_KEY_HERE", "iosGoogleMapsApiKey": "YOUR_KEY_HERE" }],
+      ["expo-notifications", { "icon": "./assets/notification_icon.png", "color": "#ffffff", "defaultChannel": "default" }],
+      ["expo-document-picker", { "iCloudContainerEnvironment": "Production" }]
+    ],
+    "ios": { "infoPlist": { "UIBackgroundModes": ["location"] } },
+    "android": {
+      "permissions": [
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.RECEIVE_BOOT_COMPLETED"
       ]
     }
   }
-
-  {
-    "expo": {
-      "plugins": [
-        [
-          "expo-location",
-          {
-            "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
-          }
-        ]
-      ]
-    }
-  }
+}

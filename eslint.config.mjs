@@ -1,17 +1,40 @@
 import eslint from "@eslint/js";
-import * as tseslint from "typescript-eslint";
+import typescript from "typescript-eslint";
+import reactPlugin from "eslint-plugin-react";
+import reactHooksPlugin from "eslint-plugin-react-hooks";
+import reactNativePlugin from "eslint-plugin-react-native";
 
 export default [
   eslint.configs.recommended,
-  ...tseslint.configs.recommended,
-  ...tseslint.configs.recommendedRequiringTypeChecking,
+  ...typescript.configs.recommended,
+  ...typescript.configs.stylistic,
+  {
+    plugins: {
+      react: reactPlugin,
+      "react-hooks": reactHooksPlugin,
+      "react-native": reactNativePlugin,
+    },
+    settings: {
+      react: {
+        version: "detect",
+      },
+    },
+    rules: {
+      // React rules
+      "react/jsx-uses-react": "error",
+      "react/jsx-uses-vars": "error",
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn",
+      // React Native rules
+      "react-native/no-unused-styles": "error",
+      "react-native/no-inline-styles": "warn",
+    },
+  },
   {
     files: ["**/*.ts", "**/*.tsx"],
     languageOptions: {
-      parser: tseslint.parser,
+      parser: typescript.parser,
       parserOptions: {
-        ecmaVersion: 2020,
-        sourceType: "module",
         project: "./tsconfig.json",
       },
     },
